@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AT_ZHYC" default="build">
+	<property file="local.properties" />
+	<property file="ant.properties" />
+	<property environment="env" />
+	<condition property="sdk.dir" value="${env.ANDROID_HOME}">
+		<isset property="env.ANDROID_HOME" />
+	</condition>
+	<loadproperties srcFile="project.properties" />
+	<fail
+		message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
+		unless="sdk.dir"
+	/>
+	<import file="custom_rules.xml" optional="true" />
+	<property name="jar.libs.dir"	value="..\libs" />
+	<property name="jar.libs.absolute.dir"	location="${jar.libs.dir}" />
+	<path id="classpath">
+		<fileset dir="${jar.libs.absolute.dir}">
+			<include name="uiautotest.jar"/>
+		</fileset>
+	</path>
+	<!-- version-tag: VERSION_TAG -->
+	<import file="${sdk.dir}/tools/ant/uibuild.xml" />
+	<target name="compile" depends="-build-setup, -pre-compile">
+		<javac encoding="${java.encoding}"
+			source="${java.source}" target="${java.target}"
+			debug="true" extdirs="" includeantruntime="false"
+			destdir="${out.classes.absolute.dir}"
+			bootclasspathref="project.target.class.path"
+			verbose="${verbose}"
+			fork="${need.javac.fork}">
+			<src path="${source.absolute.dir}" />
+			<classpath refid="classpath"/>
+			<compilerarg line="${java.compilerargs}" />
+		</javac>
+	</target>
+	<target name="-dex" depends="compile, -post-compile">
+		<dex executable="${dx}"
+			output="${intermediate.dex.file}"
+			nolocals="@{nolocals}"
+			verbose="${verbose}">
+			<fileset dir="${jar.libs.absolute.dir}">
+				<include name="uiautotest.jar"/>
+			</fileset>
+			<path path="${out.classes.absolute.dir}"/>
+		</dex>
+	</target>
+	<target name="prepare" depends="clean,build"></target>
+	<target name="sysout">
+	    <echo message="java.encoding=${java.encoding}"/>
+	</target>
+</project>
