@@ -21,6 +21,7 @@ public class Config {
 		public static final String OUTGOING_NUMBER = "outGoingNumber";
 		public static final String WLAN_NAME = "wlanName";
 		public static final String WLAN_PASSWORD = "wlanPassword";
+		public static final String DEFAULT_INPUT_METHOD = "default_input_method";
 	}
 
 	private static Config instance;

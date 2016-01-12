@@ -1,11 +1,14 @@
 package com.zhyc.helpers;
 
 public class Constants {
+	public final static String DEFAULT_INPUT_METHOD = Config.getInstance()
+			.getValue(Config.Key.DEFAULT_INPUT_METHOD);
 	// 退出界面
 	public final static String CONFIRM = "确认";
 
 	// 首页界面
 	public final static String ME = "我";
+	public final static String SEARCH = "请输入职位或企业";
 
 	// 个人中心界面
 	public final static String LOGIN_REGISTER = "登录 / 注册";
@@ -24,4 +27,10 @@ public class Constants {
 	// 账号设置界面
 	public final static String ACCOUNT_SETTING = "账号设置";
 	public final static String SIGN_OUT = "退出登录";
+
+	// 搜索界面
+	public final static String CANCEL = "取消";
+	public final static String SEARCH_TEXT = "维修";
+	public final static String CITY = "城市";
+	public final static String NO_SEARCH_RESULT = "没有找到相关的职位…";
 }
